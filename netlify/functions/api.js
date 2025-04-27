@@ -14,7 +14,11 @@ const { admin, db } = require('../../backend/firebaseConfig');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*', // Allow all origins in serverless function
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json());
 
 // API routes
@@ -24,6 +28,15 @@ app.use('/api/tours', tourRoutes);
 // Root route
 app.get('/api', (req, res) => {
   res.json({ message: 'Travel Agency Management API' });
+});
+
+// For debugging
+app.get('/api/debug', (req, res) => {
+  res.json({ 
+    message: 'API Debug Info',
+    environment: process.env.NODE_ENV,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Wrap Express app with serverless

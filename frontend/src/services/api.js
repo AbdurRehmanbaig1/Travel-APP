@@ -1,14 +1,18 @@
 import axios from 'axios';
 
-// Use environment variable for API URL with fallback to localhost for development
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Use runtime config, environment variable, or fallback to localhost for development
+const API_URL = window.runtimeConfig?.apiUrl || process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+console.log('API URL being used:', API_URL); // Debug log
 
 // Client API calls
 export const addClient = async (clientData) => {
   try {
+    console.log('Attempting to add client with API URL:', API_URL);
     const response = await axios.post(`${API_URL}/clients`, clientData);
     return response.data;
   } catch (error) {
+    console.error('Error adding client:', error);
     throw error.response ? error.response.data : { error: 'Failed to connect to server' };
   }
 };
