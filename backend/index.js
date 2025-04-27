@@ -29,13 +29,7 @@ app.get('/', (req, res) => {
   res.send('Travel Agency Management API');
 });
 
-// For Vercel
-if (process.env.VERCEL) {
-  // Handle all routes for serverless
-  module.exports = app;
-} else {
-  // Start the server for local development
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-} 
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+}); 
